@@ -331,7 +331,6 @@
       </p>
 
       <div class="when-where">
-        <div style="color:var(--lilac); font-weight:700; margin-bottom:6px;">Por favor, mantenha segredo total para ela!</div>
         <div><strong>Quando:</strong> <span id="whenText">domingo, 4 de outubro · 12h</span></div>
         <div><strong>Onde:</strong> <span id="whereText">Quadra 16, Casa 61, Setor Leste, Gama, DF</span></div>
       </div>
@@ -398,6 +397,38 @@
     <h2>Sugestão de presentes</h2>
     <p class="sub">Sua presença é o mais importante, porém se quiser algumas sugestões para presenteá-la...</p>
 
+      <!-- ITEM 1 -->
+      <div class="gift-card">
+        <div class="gift-card-body">
+          <div class="gift-card-title">Vestuário</div>
+          <a class="gift-card-link" target="_blank" rel="noopener">Tamanho: 42/G </a>
+        </div>
+      </div>
+
+      <!-- ITEM 2 -->
+      <div class="gift-card">
+        <div class="gift-card-body">
+          <div class="gift-card-title">Calçados</div>
+          <a class="gift-card-link" target="_blank" rel="noopener">Tamanho: 37/38</a>
+        </div>
+      </div>
+
+      <!-- ITEM 3 -->
+      <div class="gift-card">
+        <div class="gift-card-body">
+          <div class="gift-card-title">Acessórios</div>
+          <a class="gift-card-link" target="_blank" rel="noopener">Cor: prata</a>
+        </div>
+      </div>
+
+      <!-- ITEM 4 -->
+      <div class="gift-card">
+        <div class="gift-card-body">
+          <div class="gift-card-title">Itens de beleza e cuidado pessoal</div>
+          <a class="gift-card-link" target="_blank" rel="noopener">Evitar fragrâncias muito doces</a>
+        </div>
+      </div>
+
     <div class="pix-card">
       <div class="pix-title">Chave PIX 🔑</div>
       <div class="pix-key" id="pixKeyText">718.195.761-91</div>
@@ -412,22 +443,24 @@
 
 <!-- SDK DO FIREBASE -->
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getDatabase, ref, set, get, remove, child } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
-  // ⚠️ Preencha com os valores REAIS do seu projeto Firebase (console.firebase.google.com > Configurações do projeto)
+ 
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-analytics.js";
+ 
   const firebaseConfig = {
-    apiKey: "SUA_API_KEY",
+    apiKey: "AIzaSyAf8y-ERKqYuajkR35H5iD1vaLQuGVlC9Y",
     authDomain: "convite-vanessa.firebaseapp.com",
     databaseURL: "https://convite-vanessa-default-rtdb.firebaseio.com",
     projectId: "convite-vanessa",
     storageBucket: "convite-vanessa.firebasestorage.app",
-    messagingSenderId: "SEU_SENDER_ID",
-    appId: "SEU_APP_ID"
+    messagingSenderId: "1099073743178",
+    appId: "1:1099073743178:web:e48e5bc4b84245a4b7b9b3",
+    measurementId: "G-9P9EQTBMS4"
   };
 
   const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
+  const analytics = getAnalytics(app);
+
 
   window.storage = {
     async set(key, value) {
@@ -496,18 +529,20 @@ const CONFIG = {
   guestOfHonor: "Vanessa",
   age: 45,
   whenText: "domingo, 4 de outubro · 12h",
-  address: "Quadra 16, Casa 61, Setor Leste, Gama, DF"
+  address: "Quadra 16, casa 61, setor leste, Gama, DF",
+  lat: "-16.0177",
+  lng: "-48.0485"
 };
 
 document.getElementById('whenText').textContent = CONFIG.whenText;
 document.getElementById('whereText').textContent = CONFIG.address;
 
 // Google Maps
-const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(CONFIG.address)}`;
+const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${CONFIG.lat},${CONFIG.lng}`;
 document.getElementById('mapsBtn').href = mapsUrl;
 
 // LINK DO UBER
-const uberUrl = `https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff[formatted_address]=${encodeURIComponent(CONFIG.address)}`;
+const uberUrl = `https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff[latitude]=${CONFIG.lat}&dropoff[longitude]=${CONFIG.lng}`;
 document.getElementById('uberBtn').href = uberUrl;
 
 const screenClosed = document.getElementById('screen-closed');
