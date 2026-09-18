@@ -23,10 +23,7 @@
     --cream:#1d3557;        /* tinta escura — texto principal (contraste sobre o card claro) */
     --periwinkle:#5b86ab;   /* texto/borda secundária */
     --lilac:#5f92ca;        /* acento lilás-azulado (tarja de segredo) */
-    --btn-rsvp:#94c8ef; --btn-rsvp-dark:#6fa9d9;
-    --btn-maps:#99c4f1; --btn-maps-dark:#74a3dd;
-    --btn-uber:#b7c8f0; --btn-uber-dark:#93a8dd;
-    --btn-gift:#9be6fa; --btn-gift-dark:#5fd0ec;
+    --btn-action:#99c4f1; --btn-action-dark:#74a3dd; /* cor única de todos os botões */
     --shadow: 0 16px 34px rgba(70,110,160,0.28);
   }
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
@@ -102,7 +99,7 @@
   .clasp-btn{
     position:absolute; top:calc(58% - 17px); left:50%;
     width:34px; height:34px; border-radius:50%;
-    background:radial-gradient(circle at 35% 30%, #ffffff, var(--btn-maps) 70%);
+    background:radial-gradient(circle at 35% 30%, #ffffff, var(--btn-action) 70%);
     box-shadow: inset 0 -3px 5px rgba(70,110,160,.25), 0 3px 8px rgba(70,110,160,.35);
     transform:translateX(-50%);
     z-index:7;
@@ -159,6 +156,7 @@
     font-size:.88rem; line-height:1.7;
   }
   .when-where strong{ color:var(--blue-light); font-weight:700; }
+  .when-where .secret-note{ color:var(--blue-light); font-weight:700; margin-bottom:6px; }
   .actions{ display:flex; flex-direction:column; gap:11px; margin-top:20px; }
   .action-btn{
     display:flex; align-items:center; justify-content:center; gap:8px;
@@ -167,13 +165,10 @@
     cursor:pointer; text-decoration:none; color:var(--cream);
     transition: transform .15s ease; min-height:48px;
     border:1px solid rgba(29,53,87,.06);
+    background:linear-gradient(160deg, var(--btn-action), var(--btn-action-dark));
   }
   .action-btn:active{ transform:scale(.97); }
-  .action-btn.rsvp{ background:linear-gradient(160deg, var(--btn-rsvp), var(--btn-rsvp-dark)); }
   .action-btn.rsvp.confirmed{ background:linear-gradient(160deg, #4caf7d, #2e6b46); color:#eaf6fd; }
-  .action-btn.maps{ background:linear-gradient(160deg, var(--btn-maps), var(--btn-maps-dark)); }
-  .action-btn.uber{ background:linear-gradient(160deg, var(--btn-uber), var(--btn-uber-dark)); }
-  .action-btn.gift{ background:linear-gradient(160deg, var(--btn-gift), var(--btn-gift-dark)); }
   .required-mark{ font-size:.7rem; opacity:.85; font-weight:600; }
 
   /* MODAIS */
@@ -235,6 +230,18 @@
   .thanks{ text-align:center; padding:12px 4px 4px; }
   .thanks .big{ font-family:'Cormorant Garamond', serif; font-style:italic; font-size:1.7rem; color:var(--blue-light); margin-bottom:6px; }
   .thanks p{ color:var(--cream) !important; }
+
+  /* GALERIA DE PRESENTES (itens informativos, sem link) */
+  .gift-gallery{ display:flex; flex-direction:column; gap:10px; margin-bottom:14px; width:100%; }
+  .gift-card{
+    background:rgba(255,255,255,.55); border:1px solid rgba(74,109,145,.25);
+    border-radius:12px; padding:10px 12px; width:100%; box-sizing:border-box;
+  }
+  .gift-card-body{ display:flex; flex-direction:column; gap:4px; }
+  .gift-card-title{ font-weight:700; font-size:.88rem; color:var(--blue-light); }
+  .gift-card-link{
+    font-size:.82rem; color:var(--cream); text-decoration:none; cursor:default;
+  }
 
   .pix-card{
     background:rgba(255,255,255,.55); border:1px solid rgba(74,109,145,.3);
@@ -321,7 +328,7 @@
     <div class="card">
       <div class="stitch-border"></div>
       <button class="back-link" onclick="goToClosed()">‹ voltar ao envelope</button>
-      <div class="secret-tag" style="font-size:1.15rem; padding:7px 16px;">🤫 É surpresa!</div>
+      <div class="secret-tag" style="font-size:1.15rem; padding:7px 16px;">É surpresa!</div>
       <div class="eyebrow">um almoço especial</div>
       <h1 class="name">Vanessa</h1>
       <div class="age-row"><span class="bfly">🦋</span><span>45 anos</span><span class="bfly">🦋</span></div>
@@ -331,8 +338,9 @@
       </p>
 
       <div class="when-where">
+        <div class="secret-note">Por favor, mantenha segredo total para ela!</div>
         <div><strong>Quando:</strong> <span id="whenText">domingo, 4 de outubro · 12h</span></div>
-        <div><strong>Onde:</strong> <span id="whereText">Quadra 16, Casa 61, Setor Leste, Gama, DF</span></div>
+        <div><strong>Onde:</strong> <span id="whereText">Quadra 16, casa 61, setor leste, Gama, DF</span></div>
       </div>
 
       <div class="actions">
@@ -397,11 +405,13 @@
     <h2>Sugestão de presentes</h2>
     <p class="sub">Sua presença é o mais importante, porém se quiser algumas sugestões para presenteá-la...</p>
 
+    <div class="gift-gallery">
+
       <!-- ITEM 1 -->
       <div class="gift-card">
         <div class="gift-card-body">
           <div class="gift-card-title">Vestuário</div>
-          <a class="gift-card-link" target="_blank" rel="noopener">Tamanho: 42/G </a>
+          <span class="gift-card-link">Tamanho: 42/G</span>
         </div>
       </div>
 
@@ -409,7 +419,7 @@
       <div class="gift-card">
         <div class="gift-card-body">
           <div class="gift-card-title">Calçados</div>
-          <a class="gift-card-link" target="_blank" rel="noopener">Tamanho: 37/38</a>
+          <span class="gift-card-link">Tamanho: 37/38</span>
         </div>
       </div>
 
@@ -417,7 +427,7 @@
       <div class="gift-card">
         <div class="gift-card-body">
           <div class="gift-card-title">Acessórios</div>
-          <a class="gift-card-link" target="_blank" rel="noopener">Cor: prata</a>
+          <span class="gift-card-link">Cor: prata</span>
         </div>
       </div>
 
@@ -425,9 +435,11 @@
       <div class="gift-card">
         <div class="gift-card-body">
           <div class="gift-card-title">Itens de beleza e cuidado pessoal</div>
-          <a class="gift-card-link" target="_blank" rel="noopener">Evitar fragrâncias muito doces</a>
+          <span class="gift-card-link">Evitar fragrâncias muito doces</span>
         </div>
       </div>
+
+    </div>
 
     <div class="pix-card">
       <div class="pix-title">Chave PIX 🔑</div>
@@ -443,10 +455,9 @@
 
 <!-- SDK DO FIREBASE -->
 <script type="module">
- 
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-analytics.js";
- 
+  import { getDatabase, ref, set, get, remove, child } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
+
   const firebaseConfig = {
     apiKey: "AIzaSyAf8y-ERKqYuajkR35H5iD1vaLQuGVlC9Y",
     authDomain: "convite-vanessa.firebaseapp.com",
@@ -459,8 +470,7 @@
   };
 
   const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-
+  const db = getDatabase(app);
 
   window.storage = {
     async set(key, value) {
