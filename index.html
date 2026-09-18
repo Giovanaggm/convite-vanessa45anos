@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>SURPRESA!</title>
+
+<!--previa whatsapp -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="É SURPRESA! Vanessa 45 Anos 🦋✨">
+<meta property="og:description" content="SEGREDO ABSOLUTO! Almoço surpresa para comemorar os 45 anos da Vanessa!">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --sky-deep:#b1cee6;
+    --sky-mid:#175075;
+    --sky-soft:#1f6690;
+    --blue-light:#a9dcf2;
+    --cream:#f7fbfd;
+    --periwinkle:#7fc4e8;
+    --lilac:#c9a8e0;
+    --btn-rsvp:#2f7fa8;
+    --btn-rsvp-dark:#23617f;
+    --btn-maps:#1c4d6e;
+    --btn-maps-dark:#143a54;
+    --btn-uber:#3a5f7a;
+    --btn-uber-dark:#2a4759;
+    --btn-gift:#5b7fa6;
+    --btn-gift-dark:#43607e;
+    --shadow: 0 16px 34px rgba(6,25,42,0.45);
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{
+    min-height:100vh; min-height:100dvh;
+    background: radial-gradient(120% 90% at 50% -10%, #2a7ba8 0%, var(--sky-deep) 55%, #052236 100%);
+    font-family:'Quicksand', sans-serif;
+    color:var(--cream);
+    display:flex; align-items:center; justify-content:center;
+    padding:24px 14px; overflow-x:hidden;
+  }
+
+  #app{
+    width:100%;
+    max-width:340px;
+    position:relative;
+    margin:0 auto;
+    display:flex;
+    flex-direction:column;
+  }
+
+  .sky-butterfly{ position:fixed; pointer-events:none; opacity:.55; animation: flutter 4.2s ease-in-out infinite; }
+  @keyframes flutter{ 0%,100%{opacity:.25; transform:translateY(0) rotate(-4deg);} 50%{opacity:.75; transform:translateY(-8px) rotate(4deg);} }
+  @media (prefers-reduced-motion: reduce){ .sky-butterfly{ animation:none; } }
+
+  .card{
+    position:relative;
+    background:linear-gradient(160deg, var(--sky-soft), var(--sky-mid) 60%, var(--sky-deep));
+    border-radius:16px;
+    box-shadow:var(--shadow);
+    border:1px solid rgba(169,220,242,.35);
+    overflow:hidden;
+  }
+  .stitch-border{
+    position:absolute; inset:10px;
+    border:2px dashed rgba(247,251,253,.32);
+    border-radius:10px;
+    pointer-events:none;
+  }
+
+  .deco-bfly{ position:absolute; }
+
+  .screen{ display:none; animation: riseIn .55s ease both; }
+  .screen.show{ display:block; }
+  @keyframes riseIn{ from{ opacity:0; transform:translateY(16px);} to{opacity:1; transform:translateY(0);} }
+
+  #screen-closed .envelope-wrap{
+    position:relative;
+    aspect-ratio: 4/3.1;
+    perspective: 1300px;
+    cursor:pointer;
+  }
+  #screen-closed .card{ position:absolute; inset:0; }
+  #screen-closed .envelope-flap{
+    position:absolute; top:0; left:0; right:0; height:58%;
+    background:linear-gradient(200deg, var(--sky-soft), var(--sky-mid));
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transform-origin: top center;
+    transition: transform 1s cubic-bezier(.6,-0.2,.35,1.3);
+    z-index:6;
+    border-bottom:1px solid rgba(169,220,242,.25);
+    border-radius:16px 16px 0 0;
+  }
+  #screen-closed .envelope-wrap.open .envelope-flap{ transform: rotateX(178deg); }
+
+  #screen-closed .deco-bfly{ color:var(--blue-light); }
+  #screen-closed .deco-bfly.b-a{ top:12px; left:14px; width:22px; }
+  #screen-closed .deco-bfly.b-b{ top:18px; right:18px; width:16px; color:var(--lilac); }
+  #screen-closed .deco-bfly.b-c{ bottom:14px; left:20px; width:18px; color:var(--lilac); }
+  #screen-closed .deco-bfly.b-d{ bottom:20px; right:16px; width:14px; }
+
+  .clasp-btn{
+    position:absolute; top:calc(58% - 17px); left:50%;
+    width:34px; height:34px; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #d7effa, var(--periwinkle) 70%);
+    box-shadow: inset 0 -3px 5px rgba(0,0,0,.25), 0 3px 8px rgba(0,0,0,.35);
+    transform:translateX(-50%);
+    z-index:7;
+  }
+  .clasp-btn::before{
+    content:''; position:absolute; inset:0; margin:auto; width:15px;height:15px;
+    background-image:
+      radial-gradient(circle at 30% 30%, var(--sky-deep) 2px, transparent 2.1px),
+      radial-gradient(circle at 70% 30%, var(--sky-deep) 2px, transparent 2.1px),
+      radial-gradient(circle at 30% 70%, var(--sky-deep) 2px, transparent 2.1px),
+      radial-gradient(circle at 70% 70%, var(--sky-deep) 2px, transparent 2.1px);
+  }
+  .clasp-btn.pop{ animation: claspPop .55s ease forwards; }
+  @keyframes claspPop{
+    0%{ transform:translate(-50%,0) scale(1) rotate(0); opacity:1; }
+    30%{ transform:translate(-50%,-16px) scale(1.15) rotate(-8deg); opacity:1; }
+    100%{ transform:translate(-50%,70px) scale(.4) rotate(30deg); opacity:0; }
+  }
+
+  .tap-hint-outer{
+    text-align:center; font-family:'Caveat', cursive; font-size:1.15rem;
+    color:var(--cream); opacity:.85; margin-top:16px;
+  }
+
+  #screen-letter .card{ padding:28px 22px 26px; text-align:center; }
+  .back-link{
+    background:none; border:none; color:var(--periwinkle);
+    font-family:'Quicksand'; font-size:.82rem; cursor:pointer;
+    display:flex; align-items:center; gap:4px; margin:0 0 8px -4px;
+  }
+  .secret-tag{
+    display:inline-block; margin-bottom:10px; padding:5px 12px;
+    border:1px solid rgba(201,168,224,.5); border-radius:999px;
+    font-family:"Alfa Slab One", serif; font-size:1rem; color:var(--lilac);
+  }
+  .eyebrow{ font-family:'Caveat', cursive; color:var(--periwinkle); font-size:1.05rem; margin-bottom:4px; }
+  h1.name{
+    font-family:'Cormorant Garamond', serif; font-style:italic; font-weight:600;
+    font-size:2.9rem; line-height:1; margin:2px 0 10px; color:var(--blue-light);
+    text-shadow: 0 2px 14px rgba(169,220,242,.3);
+  }
+  .age-row{
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    color:var(--blue-light); font-family:'Cormorant Garamond', serif; font-style:italic; font-size:1.5rem;
+  }
+  .age-row .bfly{ font-size:1.1rem; }
+  .invite-copy{ font-size:.95rem; line-height:1.55; color:#e3f1f8; max-width:290px; margin:16px auto 4px; }
+  .invite-copy .meaning{ display:block; margin-top:10px; font-family:'Caveat', cursive; font-size:1.05rem; color:var(--blue-light); }
+  .when-where{
+    margin:18px 0 4px; padding:13px 10px;
+    border-top:1px dashed rgba(247,251,253,.28);
+    border-bottom:1px dashed rgba(247,251,253,.28);
+    font-size:.88rem; line-height:1.7;
+  }
+  .when-where strong{ color:var(--blue-light); font-weight:700; }
+  .actions{ display:flex; flex-direction:column; gap:11px; margin-top:20px; }
+  .action-btn{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    padding:14px 14px; border-radius:14px; border:none;
+    font-family:'Quicksand'; font-weight:700; font-size:.92rem;
+    cursor:pointer; text-decoration:none; color:var(--cream);
+    transition: transform .15s ease; min-height:48px;
+    border:1px solid rgba(247,251,253,.08);
+  }
+  .action-btn:active{ transform:scale(.97); }
+  .action-btn.rsvp{ background:linear-gradient(160deg, var(--btn-rsvp), var(--btn-rsvp-dark)); }
+  .action-btn.rsvp.confirmed{ background:linear-gradient(160deg, #2e6b46, #1f4d33); }
+  .action-btn.maps{ background:linear-gradient(160deg, var(--btn-maps), var(--btn-maps-dark)); }
+  .action-btn.uber{ background:linear-gradient(160deg, var(--btn-uber), var(--btn-uber-dark)); }
+  .action-btn.gift{ background:linear-gradient(160deg, var(--btn-gift), var(--btn-gift-dark)); }
+  .required-mark{ font-size:.7rem; opacity:.85; font-weight:600; }
+
+  /* MODAIS */
+  .modal-overlay {
+    position: fixed !important;
+    top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
+    width: 100vw !important; height: 100vh !important;
+    background: rgba(4, 16, 26, 0.82) !important;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    z-index: 9999 !important;
+    box-sizing: border-box;
+  }
+  .modal-overlay.show { display: flex !important; flex-direction: column !important; }
+  .modal {
+    background: var(--sky-mid);
+    border-radius: 16px;
+    padding: 22px 18px;
+    width: 100%;
+    max-width: 360px;
+    border: 1px solid rgba(169,220,242,.35);
+    box-shadow: var(--shadow);
+    text-align: left;
+    box-sizing: border-box;
+    max-height: 85vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin: 0 auto !important;
+    flex: none;
+  }
+  .modal * { max-width: 100%; }
+
+  .modal h2{ font-family:'Cormorant Garamond', serif; font-style:italic; font-weight:600; font-size:1.7rem; margin:0 0 4px; color:var(--blue-light); }
+  .modal p.sub{ font-size:.82rem; color:#cfe6f2; margin:0 0 15px; }
+
+  .field{ margin-bottom:13px; }
+  .field label{ display:block; font-size:.78rem; color:var(--periwinkle); margin-bottom:5px; }
+  .field input, .field textarea{
+    width:100%; border-radius:10px; border:1px solid rgba(169,220,242,.4);
+    background:rgba(247,251,253,.06); color:var(--cream);
+    padding:11px 12px; font-family:'Quicksand'; font-size:1rem; resize:none;
+    box-sizing:border-box;
+  }
+  .field input::placeholder, .field textarea::placeholder{ color:#8fb3c7; }
+
+  .modal-actions{ display:flex; gap:10px; margin-top:12px; justify-content:center; }
+  .modal-actions button{ flex:1; border:none; border-radius:999px; padding:12px; font-weight:700; font-family:'Quicksand'; cursor:pointer; min-height:46px; }
+  .modal-actions .cancel{ background:transparent; color:var(--periwinkle); border:1px solid rgba(169,220,242,.4); }
+  .modal-actions .submit{ background:var(--blue-light); color:var(--sky-deep); }
+
+  .form-msg{ font-size:.78rem; margin-top:8px; min-height:16px; }
+  .form-msg.err{ color:#f18a8a; }
+  .form-msg.ok{ color:#8fe0a0; }
+  .form-msg.loading{ color:var(--periwinkle); }
+
+  .thanks{ text-align:center; padding:12px 4px 4px; }
+  .thanks .big{ font-family:'Cormorant Garamond', serif; font-style:italic; font-size:1.7rem; color:var(--blue-light); margin-bottom:6px; }
+
+
+  .pix-card{
+    background:rgba(169,220,242,.08); border:1px solid rgba(169,220,242,.25);
+    border-radius:12px; padding:12px; text-align:center; margin-top:10px; width:100%; box-sizing:border-box;
+  }
+  .pix-title { font-size: .78rem; color: var(--blue-light); font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
+  .pix-key { font-family: monospace; font-size: .9rem; color: var(--cream); background: rgba(0, 0, 0, .2); padding: 6px 8px; border-radius: 6px; margin: 6px 0; word-break: break-all; }
+  .copy-pix-btn {
+    background: var(--blue-light);
+    color: var(--sky-deep);
+    border: none;
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: .75rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Quicksand';
+  }
+
+  /* PAINEL ANFITRIÃO */
+  .host-toggle{
+    position:fixed; top:10px; right:10px; z-index:40;
+    background:rgba(18,44,64,.9); color:var(--periwinkle);
+    border:1px solid rgba(169,220,242,.4); border-radius:999px;
+    font-size:.72rem; padding:7px 11px; cursor:pointer;
+  }
+  .host-panel{
+    background:var(--sky-mid); border-radius:14px; padding:16px;
+    margin-top:14px; border:1px solid rgba(169,220,242,.3); text-align:left; display:none;
+  }
+  .host-panel.show{ display:block; }
+  .host-panel h3{ font-family:'Cormorant Garamond', serif; font-style:italic; font-weight:600; color:var(--blue-light); font-size:1.4rem; margin:0 0 4px; }
+  .host-total{ font-size:.83rem; color:var(--cream); margin-bottom:10px; }
+  .host-list li{
+    background:rgba(247,251,253,.06); border-radius:10px; padding:8px 10px; font-size:.83rem;
+    display:flex; justify-content:space-between; align-items:center; gap:8px;
+  }
+  .host-list li .info{ flex:1; }
+  .host-list li .who{ font-weight:700; color:var(--blue-light); }
+  .host-list li .comps{ color:#cfe6f2; font-size:.76rem; }
+  .host-list li .delete-item-btn{
+    background:none; border:none; color:#f18a8a; font-size:1.1rem;
+    cursor:pointer; padding:2px 6px; border-radius:4px; opacity:.8; transition:opacity .2s;
+  }
+  .host-list li .delete-item-btn:hover{ opacity:1; background:rgba(241,138,138,.15); }
+  .host-btn-group { display: flex; gap: 8px; margin-top: 10px; }
+  .host-refresh, .host-clear{
+    flex: 1; background:none; border:1px solid rgba(169,220,242,.4);
+    color:var(--periwinkle); border-radius:999px; padding:8px 10px; font-size:.78rem; cursor:pointer;
+  }
+  .host-clear { border-color: rgba(241,138,138,.4); color: #f18a8a; }
+
+  @media (max-width: 340px){
+    #app{ max-width: 92vw; }
+    h1.name{ font-size:2.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- SCREEN 1: ENVELOPE -->
+  <div class="screen show" id="screen-closed">
+    <div class="envelope-wrap" id="envelopeWrap" onclick="openEnvelope()">
+      <div class="card">
+        <div class="stitch-border"></div>
+        <svg class="deco-bfly b-a" viewBox="0 0 32 24" fill="currentColor"><path d="M16 6c-2-5-9-7-11-3-2 4 2 8 7 7-5 1-8 6-5 9 3 3 8 0 9-6 1 6 6 9 9 6 3-3 0-8-5-9 5 1 9-3 7-7-2-4-9-2-11 3z"/></svg>
+        <svg class="deco-bfly b-b" viewBox="0 0 32 24" fill="currentColor"><path d="M16 6c-2-5-9-7-11-3-2 4 2 8 7 7-5 1-8 6-5 9 3 3 8 0 9-6 1 6 6 9 9 6 3-3 0-8-5-9 5 1 9-3 7-7-2-4-9-2-11 3z"/></svg>
+        <svg class="deco-bfly b-c" viewBox="0 0 32 24" fill="currentColor"><path d="M16 6c-2-5-9-7-11-3-2 4 2 8 7 7-5 1-8 6-5 9 3 3 8 0 9-6 1 6 6 9 9 6 3-3 0-8-5-9 5 1 9-3 7-7-2-4-9-2-11 3z"/></svg>
+        <svg class="deco-bfly b-d" viewBox="0 0 32 24" fill="currentColor"><path d="M16 6c-2-5-9-7-11-3-2 4 2 8 7 7-5 1-8 6-5 9 3 3 8 0 9-6 1 6 6 9 9 6 3-3 0-8-5-9 5 1 9-3 7-7-2-4-9-2-11 3z"/></svg>
+      </div>
+
+      <div class="envelope-flap"></div>
+      <div class="clasp-btn" id="claspBtn"></div>
+    </div>
+
+    <div class="tap-hint-outer" id="tapHintOuter">toque para abrir ✧</div>
+    <div class="secret-tag" style="display:block; text-align:center; margin:14px auto 0; width:fit-content;">SURPRESA</div>
+  </div>
+
+  <!-- SCREEN 2: CARTA -->
+  <div class="screen" id="screen-letter">
+    <div class="card">
+      <div class="stitch-border"></div>
+      <button class="back-link" onclick="goToClosed()">‹ voltar ao envelope</button>
+      <div class="secret-tag" style="font-size:1.15rem; padding:7px 16px; border-color:var(--lilac); color:var(--lilac); animation: flutter 3s ease-in-out infinite;">🤫 É SURPRESA — NÃO CONTE PRA ELA!</div>
+      <div class="eyebrow">um almoço especial</div>
+      <h1 class="name">Vanessa</h1>
+      <div class="age-row"><span class="bfly">🦋</span><span>45 anos</span><span class="bfly">🦋</span></div>
+      <p class="invite-copy">
+        Você está convidado para nosso almoço surpresa de 45 anso de Vanessa, será um prazerter sua presença!
+        <span class="meaning">🦋</span>
+      </p>
+
+      <div class="when-where">
+        <div style="color:var(--lilac); font-weight:700; margin-bottom:6px;">Por favor, mantenha segredo total para ela!</div>
+        <div><strong>Quando:</strong> <span id="whenText">domingo, 4 de outubro · 12h</span></div>
+        <div><strong>Onde:</strong> <span id="whereText">Quadra 16, Casa 61, Setor Leste, Gama, DF</span></div>
+      </div>
+
+      <div class="actions">
+        <button class="action-btn rsvp" id="rsvpOpenBtn" onclick="openRsvp()">✅ Confirme a presença <span class="required-mark">(obrigatório)</span></button>
+        <a class="action-btn maps" id="mapsBtn" href="#" target="_blank" rel="noopener">📍 Google Maps</a>
+        <a class="action-btn uber" id="uberBtn" href="#" target="_blank" rel="noopener">🚗 Vai de Uber?</a>
+        <button class="action-btn gift" onclick="openGift()">🎁 Quer presentear?</button>
+      </div>
+    </div>
+
+    <!-- PAINEL DO ANFITRIÃO -->
+    <div class="host-panel" id="hostPanel">
+      <h3>Lista de confirmados</h3>
+      <div class="host-total" id="hostTotal">carregando…</div>
+      <ul class="host-list" id="hostList"></ul>
+      <div class="host-btn-group">
+        <button class="host-refresh" onclick="loadHostList()">atualizar</button>
+        <button class="host-clear" onclick="clearHostList()">limpar lista</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- BOTÃO FLUTUANTE DO ANFITRIÃO -->
+<button class="host-toggle" id="hostToggleBtn" style="display:none" onclick="toggleHostPanel()">📋 anfitrião(ã)</button>
+
+<!-- RSVP MODAL -->
+<div class="modal-overlay" id="rsvpOverlay">
+  <div class="modal">
+    <div id="rsvpFormWrap">
+      <h2>Confirmar presença</h2>
+      <p class="sub">Conta pra gente quem vem! Se você for sozinho(a), pode deixar o segundo campo em branco.</p>
+      <div class="field">
+        <label>Seu nome</label>
+        <input id="guestName" type="text" placeholder="Ex: Maria Souza" />
+      </div>
+      <div class="field">
+        <label>Vai levar mais alguém? (nomes, um por linha)</label>
+        <textarea id="guestCompanions" rows="3" placeholder="Ex: João Souza&#10;Ana Souza"></textarea>
+      </div>
+      <div class="form-msg" id="formMsg"></div>
+      <div class="modal-actions">
+        <button class="cancel" onclick="closeRsvp()">cancelar</button>
+        <button class="submit" id="submitBtn" onclick="submitRsvp()">enviar</button>
+      </div>
+    </div>
+
+    <div id="rsvpThanks" class="thanks" style="display:none">
+      <div class="big">Presença confirmada! 🦋</div>
+      <p style="font-size:.85rem;color:#cfe6f2;margin:0 0 16px;">Já anotamos aqui!</p>
+      <div class="modal-actions">
+        <button class="submit" onclick="closeRsvp()">fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GIFT MODAL -->
+<div class="modal-overlay" id="giftOverlay">
+  <div class="modal">
+    <h2>Sugestão de presentes</h2>
+    <p class="sub">Sua presença é o mais importante, porém se quiser algumas sugestões para presentear-la...</p>
+    </div>
+
+    <div class="pix-card">
+      <div class="pix-title">Chave PIX 🔑</div>
+      <div class="pix-key" id="pixKeyText">718.195.761-91</div>
+      <button class="copy-pix-btn" id="copyPixBtn" onclick="copyPix()">copiar chave PIX</button>
+    </div>
+
+    <div class="modal-actions" style="margin-top:16px;">
+      <button class="cancel" onclick="closeGift()">fechar</button>
+    </div>
+  </div>
+</div>
+
+<!-- SDK DO FIREBASE -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getDatabase, ref, set, get, remove, child } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+  // ⚠️ 
+  const firebaseConfig = {
+    apiKey: "SUA_API_KEY",
+    authDomain: "convite-vanessa.firebaseapp.com",
+    databaseURL: "https://console.firebase.google.com/project/convite-vanessa/database/convite-vanessa-default-rtdb/data/~2F?hl=pt-br",
+    projectId: "convite-vanessa",
+    storageBucket: "convite-vanessa.firebasestorage.app",
+    messagingSenderId: "SEU_SENDER_ID",
+    appId: "SEU_APP_ID"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  window.storage = {
+    async set(key, value) {
+      try {
+        await set(ref(db, key), value);
+        return true;
+      } catch (err) {
+        console.error('Erro no set:', err);
+        return false;
+      }
+    },
+    async get(key) {
+      try {
+        const snapshot = await get(child(ref(db), key));
+        if (snapshot.exists()) return { value: snapshot.val() };
+        return null;
+      } catch (err) {
+        console.error('Erro no get:', err);
+        return null;
+      }
+    },
+    async list(prefix) {
+      try {
+        const snapshot = await get(ref(db));
+        if (!snapshot.exists()) return { keys: [] };
+        const data = snapshot.val();
+        const keys = Object.keys(data).filter(k => k.startsWith(prefix)).sort();
+        return { keys };
+      } catch (err) {
+        console.error('Erro no list:', err);
+        return { keys: [] };
+      }
+    },
+    async delete(key) {
+      try {
+        await remove(ref(db, key));
+        return true;
+      } catch (err) {
+        console.error('Erro no delete:', err);
+        return false;
+      }
+    },
+    async clearAllRSVP() {
+      try {
+        const listResult = await this.list('rsvp_vanessa_');
+        const keys = listResult.keys || [];
+        for (const k of keys) {
+          await remove(ref(db, k));
+        }
+        return true;
+      } catch (err) {
+        console.error('Erro no clearAllRSVP:', err);
+        return false;
+      }
+    }
+  };
+
+  const isHost = new URLSearchParams(window.location.search).get('anfitriao') === '1';
+  if(isHost) {
+    document.getElementById('hostToggleBtn').style.display = 'block';
+  }
+</script>
+
+<script>
+const CONFIG = {
+  guestOfHonor: "Vanessa",
+  age: 45,
+  whenText: "domingo, 4 de outubro · 12h",
+  address: "Quadra 16, Casa 61, Setor Leste, Gama, DF"
+};
+
+document.getElementById('whenText').textContent = CONFIG.whenText;
+document.getElementById('whereText').textContent = CONFIG.address;
+
+// Google Maps 
+const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(CONFIG.address)}`;
+document.getElementById('mapsBtn').href = mapsUrl;
+
+// LINK DO UBER 
+const uberUrl = `https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff[formatted_address]=${encodeURIComponent(CONFIG.address)}`;
+document.getElementById('uberBtn').href = uberUrl;
+
+const screenClosed = document.getElementById('screen-closed');
+const screenLetter = document.getElementById('screen-letter');
+const envelopeWrapEl = document.getElementById('envelopeWrap');
+const claspBtnEl = document.getElementById('claspBtn');
+const tapHintOuterEl = document.getElementById('tapHintOuter');
+
+function showScreen(el){
+  [screenClosed, screenLetter].forEach(s => s.classList.remove('show'));
+  el.classList.add('show');
+}
+function goToLetter(){ showScreen(screenLetter); }
+function goToClosed(){
+  showScreen(screenClosed);
+  envelopeWrapEl.classList.remove('open');
+  claspBtnEl.classList.remove('pop');
+  tapHintOuterEl.textContent = 'toque para abrir ✧';
+}
+
+let envelopeBusy = false;
+function openEnvelope(){
+  if(envelopeBusy) return;
+  envelopeBusy = true;
+  claspBtnEl.classList.add('pop');
+  tapHintOuterEl.textContent = 'abrindo…';
+  setTimeout(() => {
+    envelopeWrapEl.classList.add('open');
+  }, 350);
+  setTimeout(() => {
+    goToLetter();
+    envelopeBusy = false;
+  }, 350 + 950);
+}
+
+// RSVP MODAL
+const rsvpOverlay = document.getElementById('rsvpOverlay');
+function openRsvp(){ rsvpOverlay.classList.add('show'); }
+function closeRsvp(){
+  rsvpOverlay.classList.remove('show');
+  document.getElementById('rsvpFormWrap').style.display = 'block';
+  document.getElementById('rsvpThanks').style.display = 'none';
+  document.getElementById('guestName').value = '';
+  document.getElementById('guestCompanions').value = '';
+  document.getElementById('formMsg').textContent = '';
+  const submitBtn = document.getElementById('submitBtn');
+  submitBtn.disabled = false;
+  submitBtn.textContent = 'enviar';
+}
+
+// GIFT MODAL
+const giftOverlay = document.getElementById('giftOverlay');
+function openGift(){ giftOverlay.classList.add('show'); }
+function closeGift(){ giftOverlay.classList.remove('show'); }
+
+function copyPix(){
+  const pixKey = document.getElementById('pixKeyText').innerText;
+  navigator.clipboard.writeText(pixKey).then(() => {
+    const btn = document.getElementById('copyPixBtn');
+    btn.innerText = 'copiado! ✓';
+    setTimeout(() => { btn.innerText = 'copiar chave PIX'; }, 2000);
+  });
+}
+
+let isSubmitting = false;
+
+async function submitRsvp(){
+  if(isSubmitting) return;
+
+  const nameEl = document.getElementById('guestName');
+  const compEl = document.getElementById('guestCompanions');
+  const msg = document.getElementById('formMsg');
+  const submitBtn = document.getElementById('submitBtn');
+  const name = nameEl.value.trim();
+  const companionsRaw = compEl.value.trim();
+  const companions = companionsRaw
+    ? companionsRaw.split('\n').map(s => s.trim()).filter(Boolean)
+    : [];
+
+  if(!name){
+    msg.textContent = 'Escreva seu nome ali em cima :)';
+    msg.className = 'form-msg err';
+    return;
+  }
+
+  isSubmitting = true;
+  submitBtn.disabled = true;
+  msg.textContent = 'enviando...';
+  msg.className = 'form-msg loading';
+
+  const entry = {
+    name,
+    companions,
+    total: 1 + companions.length,
+    timestamp: new Date().toISOString()
+  };
+  const key = 'rsvp_vanessa_' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
+
+  try {
+    const result = await window.storage.set(key, entry);
+    if(result){
+      document.getElementById('rsvpFormWrap').style.display = 'none';
+      document.getElementById('rsvpThanks').style.display = 'block';
+      const rsvpBtn = document.getElementById('rsvpOpenBtn');
+      rsvpBtn.innerHTML = '✅ Presença confirmada';
+      rsvpBtn.classList.add('confirmed');
+      rsvpBtn.disabled = true;
+    } else {
+      throw new Error('Falha ao salvar');
+    }
+  } catch(err) {
+    msg.textContent = 'Não conseguimos salvar agora. Tente novamente!';
+    msg.className = 'form-msg err';
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'tentar novamente';
+  }
+
+  isSubmitting = false;
+}
+
+function toggleHostPanel(){
+  const panel = document.getElementById('hostPanel');
+  panel.classList.toggle('show');
+  if(panel.classList.contains('show')){ loadHostList(); }
+}
+
+async function loadHostList(){
+  const listEl = document.getElementById('hostList');
+  const totalEl = document.getElementById('hostTotal');
+  listEl.innerHTML = '';
+  totalEl.textContent = 'carregando…';
+  try{
+    const listResult = await window.storage.list('rsvp_vanessa_');
+    const keys = (listResult && listResult.keys) ? listResult.keys : [];
+
+    if(keys.length === 0){
+      totalEl.textContent = 'Ninguém confirmou ainda.';
+      return;
+    }
+    let totalGuests = 0;
+    const entries = [];
+    for(const k of keys){
+      try{
+        const r = await window.storage.get(k);
+        if(r && r.value){
+          const parsed = (typeof r.value === 'string') ? JSON.parse(r.value) : r.value;
+          entries.push({ key: k, data: parsed });
+          totalGuests += parsed.total || 1;
+        }
+      }catch(e){}
+    }
+    entries.sort((a,b) => (a.data.timestamp || '').localeCompare(b.data.timestamp || ''));
+    totalEl.textContent = entries.length + ' confirmação(ões) · ' + totalGuests + ' pessoa(s) no total';
+    listEl.innerHTML = entries.map(e => {
+      const comps = (e.data.companions && e.data.companions.length)
+        ? '<div class="comps">+ ' + e.data.companions.join(', ') + '</div>'
+        : '<div class="comps">vem sozinho(a)</div>';
+      return '<li><div class="info"><span class="who">' + escapeHtml(e.data.name) + '</span>' + comps + '</div>' +
+             '<button class="delete-item-btn" onclick="deleteGuest(\'' + e.key + '\', \'' + escapeHtml(e.data.name) + '\')" title="Remover este convidado">✕</button></li>';
+    }).join('');
+  }catch(err){
+    console.error('Erro ao carregar lista:', err);
+    totalEl.textContent = 'Não foi possível carregar a lista.';
+  }
+}
+
+async function deleteGuest(key, name){
+  if(!confirm(`Remover "${name}" da lista de confirmações?`)) return;
+
+  try {
+    const ok = await window.storage.delete(key);
+    if(ok){
+      loadHostList();
+    } else {
+      alert("Não foi possível remover a confirmação.");
+    }
+  } catch(err) {
+    console.error('Erro ao deletar convidado:', err);
+    alert("Erro ao remover o convidado.");
+  }
+}
+
+async function clearHostList(){
+  if(!confirm('Tem certeza que quer apagar TODAS as confirmações? Essa ação não pode ser desfeita.')) return;
+  try {
+    const ok = await window.storage.clearAllRSVP();
+    if(ok){ loadHostList(); }
+    else { alert('Não foi possível limpar a lista.'); }
+  } catch(err){
+    console.error('Erro ao limpar lista:', err);
+    alert('Erro ao limpar a lista.');
+  }
+}
+
+function escapeHtml(str){
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+(function addButterflies(){
+  const positions = [
+    {t:'6%', l:'10%', s:16, d:0}, {t:'14%', l:'82%', s:12, d:.6},
+    {t:'40%', l:'4%', s:10, d:1.2}, {t:'62%', l:'90%', s:13, d:.3},
+    {t:'85%', l:'15%', s:11, d:.9}, {t:'92%', l:'70%', s:13, d:1.5}
+  ];
+  positions.forEach(p => {
+    const s = document.createElement('div');
+    s.className = 'sky-butterfly';
+    s.style.top = p.t; s.style.left = p.l;
+    s.style.animationDelay = p.d + 's';
+    s.innerHTML = '<svg width="'+p.s+'" height="'+(p.s*0.75)+'" viewBox="0 0 32 24" fill="#a9dcf2"><path d="M16 6c-2-5-9-7-11-3-2 4 2 8 7 7-5 1-8 6-5 9 3 3 8 0 9-6 1 6 6 9 9 6 3-3 0-8-5-9 5 1 9-3 7-7-2-4-9-2-11 3z"/></svg>';
+    document.body.appendChild(s);
+  });
+})();
+</script>
+</body>
+</html>
