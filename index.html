@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>SURPRESA!</title>
 
-<!--previa whatsapp -->
+<!-- prévia whatsapp -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="É SURPRESA! Vanessa 45 Anos 🦋✨">
 <meta property="og:description" content="SEGREDO ABSOLUTO! Almoço surpresa para comemorar os 45 anos da Vanessa!">
@@ -15,7 +15,7 @@
 
 <style>
   :root{
-    /* paleta pastel a partir das 5 cores que você mandou */
+    /* paleta pastel */
     --sky-soft:#dceffa;     /* quase branco, topo do degradê */
     --sky-mid:#aedafa;      /* meio do degradê */
     --sky-deep:#b7c8f0;     /* base do degradê (lavanda-azulado) */
@@ -231,7 +231,7 @@
   .thanks .big{ font-family:'Cormorant Garamond', serif; font-style:italic; font-size:1.7rem; color:var(--blue-light); margin-bottom:6px; }
   .thanks p{ color:var(--cream) !important; }
 
-  /* GALERIA DE PRESENTES (itens informativos, sem link) */
+  /* GALERIA DE PRESENTES */
   .gift-gallery{ display:flex; flex-direction:column; gap:10px; margin-bottom:14px; width:100%; }
   .gift-card{
     background:rgba(255,255,255,.55); border:1px solid rgba(74,109,145,.25);
@@ -277,7 +277,7 @@
   .host-total{ font-size:.83rem; color:var(--cream); margin-bottom:10px; }
   .host-list li{
     background:rgba(255,255,255,.6); border-radius:10px; padding:8px 10px; font-size:.83rem;
-    display:flex; justify-content:space-between; align-items:center; gap:8px;
+    display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:6px;
   }
   .host-list li .info{ flex:1; }
   .host-list li .who{ font-weight:700; color:var(--blue-light); }
@@ -355,7 +355,7 @@
     <div class="host-panel" id="hostPanel">
       <h3>Lista de confirmados</h3>
       <div class="host-total" id="hostTotal">carregando…</div>
-      <ul class="host-list" id="hostList"></ul>
+      <ul class="host-list" id="hostList" style="padding-left: 0; list-style: none;"></ul>
       <div class="host-btn-group">
         <button class="host-refresh" onclick="loadHostList()">atualizar</button>
         <button class="host-clear" onclick="clearHostList()">limpar lista</button>
@@ -406,39 +406,30 @@
     <p class="sub">Sua presença é o mais importante, porém se quiser algumas sugestões para presenteá-la...</p>
 
     <div class="gift-gallery">
-
-      <!-- ITEM 1 -->
       <div class="gift-card">
         <div class="gift-card-body">
           <div class="gift-card-title">Vestuário</div>
           <span class="gift-card-link">Tamanho: 42/G</span>
         </div>
       </div>
-
-      <!-- ITEM 2 -->
       <div class="gift-card">
         <div class="gift-card-body">
           <div class="gift-card-title">Calçados</div>
           <span class="gift-card-link">Tamanho: 37/38</span>
         </div>
       </div>
-
-      <!-- ITEM 3 -->
       <div class="gift-card">
         <div class="gift-card-body">
           <div class="gift-card-title">Acessórios</div>
           <span class="gift-card-link">Cor: prata</span>
         </div>
       </div>
-
-      <!-- ITEM 4 -->
       <div class="gift-card">
         <div class="gift-card-body">
           <div class="gift-card-title">Itens de beleza e cuidado pessoal</div>
           <span class="gift-card-link">Evitar fragrâncias muito doces</span>
         </div>
       </div>
-
     </div>
 
     <div class="pix-card">
@@ -456,7 +447,7 @@
 <!-- SDK DO FIREBASE -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
-  import { getDatabase, ref, set, get, remove, child } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
+  import { getDatabase, ref, set, get, remove } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyAf8y-ERKqYuajkR35H5iD1vaLQuGVlC9Y",
@@ -473,53 +464,42 @@
   const db = getDatabase(app);
 
   window.storage = {
+    // Salva na pasta 'rsvps'
     async set(key, value) {
       try {
-        await set(ref(db, key), value);
+        await set(ref(db, `rsvps/${key}`), value);
         return true;
       } catch (err) {
         console.error('Erro no set:', err);
         return false;
       }
     },
-    async get(key) {
+    // Lista todas as confirmações dentro da pasta 'rsvps'
+    async listAll() {
       try {
-        const snapshot = await get(child(ref(db), key));
-        if (snapshot.exists()) return { value: snapshot.val() };
-        return null;
-      } catch (err) {
-        console.error('Erro no get:', err);
-        return null;
-      }
-    },
-    async list(prefix) {
-      try {
-        const snapshot = await get(ref(db));
-        if (!snapshot.exists()) return { keys: [] };
+        const snapshot = await get(ref(db, 'rsvps'));
+        if (!snapshot.exists()) return [];
         const data = snapshot.val();
-        const keys = Object.keys(data).filter(k => k.startsWith(prefix)).sort();
-        return { keys };
+        return Object.entries(data).map(([key, value]) => ({ key, value }));
       } catch (err) {
-        console.error('Erro no list:', err);
-        return { keys: [] };
+        console.error('Erro no listAll:', err);
+        return [];
       }
     },
+    // Deleta um item específico de 'rsvps'
     async delete(key) {
       try {
-        await remove(ref(db, key));
+        await remove(ref(db, `rsvps/${key}`));
         return true;
       } catch (err) {
         console.error('Erro no delete:', err);
         return false;
       }
     },
+    // Apaga toda a pasta 'rsvps'
     async clearAllRSVP() {
       try {
-        const listResult = await this.list('rsvp_vanessa_');
-        const keys = listResult.keys || [];
-        for (const k of keys) {
-          await remove(ref(db, k));
-        }
+        await remove(ref(db, 'rsvps'));
         return true;
       } catch (err) {
         console.error('Erro no clearAllRSVP:', err);
@@ -649,7 +629,7 @@ async function submitRsvp(){
     total: 1 + companions.length,
     timestamp: new Date().toISOString()
   };
-  const key = 'rsvp_vanessa_' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
+  const key = 'rsvp_' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
 
   try {
     const result = await window.storage.set(key, entry);
@@ -684,36 +664,36 @@ async function loadHostList(){
   const totalEl = document.getElementById('hostTotal');
   listEl.innerHTML = '';
   totalEl.textContent = 'carregando…';
-  try{
-    const listResult = await window.storage.list('rsvp_vanessa_');
-    const keys = (listResult && listResult.keys) ? listResult.keys : [];
 
-    if(keys.length === 0){
+  try{
+    const items = await window.storage.listAll();
+
+    if(items.length === 0){
       totalEl.textContent = 'Ninguém confirmou ainda.';
       return;
     }
+
     let totalGuests = 0;
-    const entries = [];
-    for(const k of keys){
-      try{
-        const r = await window.storage.get(k);
-        if(r && r.value){
-          const parsed = (typeof r.value === 'string') ? JSON.parse(r.value) : r.value;
-          entries.push({ key: k, data: parsed });
-          totalGuests += parsed.total || 1;
-        }
-      }catch(e){}
-    }
+    const entries = items.map(item => {
+      const parsed = (typeof item.value === 'string') ? JSON.parse(item.value) : item.value;
+      totalGuests += parsed.total || 1;
+      return { key: item.key, data: parsed };
+    });
+
     entries.sort((a,b) => (a.data.timestamp || '').localeCompare(b.data.timestamp || ''));
+
     totalEl.textContent = entries.length + ' confirmação(ões) · ' + totalGuests + ' pessoa(s) no total';
+
     listEl.innerHTML = entries.map(e => {
       const comps = (e.data.companions && e.data.companions.length)
         ? '<div class="comps">+ ' + e.data.companions.join(', ') + '</div>'
         : '<div class="comps">vem sozinho(a)</div>';
+
       return '<li><div class="info"><span class="who">' + escapeHtml(e.data.name) + '</span>' + comps + '</div>' +
              '<button class="delete-item-btn" onclick="deleteGuest(\'' + e.key + '\', \'' + escapeHtml(e.data.name) + '\')" title="Remover este convidado">✕</button></li>';
     }).join('');
-  }catch(err){
+
+  } catch(err){
     console.error('Erro ao carregar lista:', err);
     totalEl.textContent = 'Não foi possível carregar a lista.';
   }
